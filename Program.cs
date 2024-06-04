@@ -4,7 +4,7 @@ namespace ScreenSound
 {
     class Program
     {
-        static List<string> listaDasBandas = new List<string>();
+      static Dictionary<string, List<int>> bandasRegistradas = new Dictionary<string, List<int>>();
 
         static void ExibirLogo()
         {
@@ -36,7 +36,7 @@ namespace ScreenSound
                     RegistrarBandas();
                     break;
                 case 2:
-                    Console.WriteLine($"Você escolheu a opção {opcaoEscolhida}");
+                    MostrarBandasRegistradas();
                     break;
                 case 3:
                     Console.WriteLine($"Você escolheu a opção {opcaoEscolhida}");
@@ -56,10 +56,10 @@ namespace ScreenSound
         static void RegistrarBandas()
         {
             Console.Clear();
-            Console.WriteLine("Registro de Bandas");
+            ExibirTituloDaOpcao("Registro Das Bandas");
             Console.WriteLine("Digite o nome da banda que deseja registrar: ");
             string nomeDaBanda = Console.ReadLine()!;
-            listaDasBandas.Add(nomeDaBanda);
+            bandasRegistradas.Add(nomeDaBanda, new List<int>());
             Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso!");
             Thread.Sleep(2000);
             Console.Clear();
@@ -68,8 +68,36 @@ namespace ScreenSound
             ExibirOpcoesDoMenu();
 
         }
+
+        static void MostrarBandasRegistradas()
+        {
+            Console.Clear();
+            ExibirTituloDaOpcao("Exibindo todas as bandas registradas");
+
+            foreach (string banda in bandasRegistradas.Keys) {
+                Console.WriteLine($"Banda: {banda}");
+            }
+
+            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
+            Console.ReadKey();
+            Console.Clear();
+            ExibirOpcoesDoMenu();
+        }
+
+        static void ExibirTituloDaOpcao(string titulo)
+        {
+            int quantidadeDeLetras = titulo.Length;
+            string asteriscos = string.Empty.PadLeft(quantidadeDeLetras, '*');
+            Console.WriteLine(asteriscos);
+            Console.WriteLine(titulo);
+            Console.WriteLine(asteriscos + "\n");
+        }
+
         static void Main(string[] args)
         {
+            bandasRegistradas.Add("Linkin Park", new List<int> {10, 8, 6 });
+            bandasRegistradas.Add("The Beatles", new List<int>());
+
             ExibirLogo();
             ExibirOpcoesDoMenu();
         }
